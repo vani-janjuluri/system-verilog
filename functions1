@@ -1,0 +1,14 @@
+//variable declare prior to the function.
+module tb;
+  bit[4:0]y=0;
+ bit[3:0]a=4'b0010;
+ bit[3:0]b=4'b0100;
+
+  function bit[4:0] add();
+    return a+b;
+  endfunction
+  initial begin
+   y=add();
+    $display("the value of y:%d",y);
+  end
+    endmodule
