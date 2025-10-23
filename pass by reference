@@ -1,0 +1,16 @@
+module tb;
+  task  automatic swap( ref int a, ref int b);
+    int temp;
+    temp=a;
+    a=b;
+    b=temp;
+    $display("the value of a :%0d and b :%0d",a,b);
+  endtask
+  int x=5;
+    int y=10;
+  initial begin
+$display("the value of a :%0d and b :%0d",x,y);
+     swap(x,y);
+  end
+endmodule
+  
