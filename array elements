@@ -1,0 +1,14 @@
+module tb;
+  bit array1[3:0];
+  bit array2[8];
+  bit array3[]={1,0,1,1};
+  initial begin
+    $display("size of the array1:%0d",$size(array1));
+    $display("size of the array2:%0d",$size(array2));
+    $display("size of the array3:%0d",$size(array3));
+    $display("the first element of array3:%0d",array3[0]);
+    $display("the second element of array3:%0d",array3[1]);
+    array3[0]=0;
+    $display("the new array first element of array3:%0d",array3[0]);
+  end
+endmodule
