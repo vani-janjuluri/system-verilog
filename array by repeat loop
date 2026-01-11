@@ -1,0 +1,12 @@
+module tb;
+  int i=0;
+  int array[10];
+  initial begin
+    repeat(9)
+      begin
+      array[i]=i;
+      i++;
+      end
+    $display("array is %0p",array);
+  end
+endmodule
