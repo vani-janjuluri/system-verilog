@@ -1,0 +1,11 @@
+module tb;
+  int array1[]='{6{2}};///repetative 
+  int array2[]='{1,2,3,4};///unique value
+  int array3[3]='{default:3};////default values only for fixed sized array 
+  initial begin
+    $display("the array is %0p",array1);
+    $display("the array2 is %0p",array2);
+    $display("the array3 is %0p",array3);
+  end
+endmodule
+    
