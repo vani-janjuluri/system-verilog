@@ -1,0 +1,13 @@
+module tb;
+  int array1[5]='{1,2,3,4,5};
+  int array2[5]='{1,2,3,4,5};
+  int status;
+  initial begin
+    status=(array1==array2);
+    begin
+      $display("status:%0d",status);////status =0 (if arrays are not equal)
+      ///status = 1 (if arrays are equal)
+    end
+  end
+endmodule
+    
