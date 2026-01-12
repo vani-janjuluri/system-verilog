@@ -1,0 +1,18 @@
+module tb;
+  int array[$];
+  initial begin
+    array={1,2,3,4,5,6,7};
+    $display("array:%0p",array);////1,2,3,4,5,6,7
+    array.push_front(0);///add element at the start of array
+    $display("array : %0p",array);///0,1,2,3,4,5,6,7
+    array.push_back(8);///add element at the end of the array
+    $display("array:%0p",array);///0,1,2,3,4,5,6,7,8
+    array.insert(0,0);///insert 0 at o position
+    $display("array:%0p",array);///0,0,1,2,3,4,5,6,7,8
+    array.pop_front();///remove element at the start of the array
+    $display("array:%0p",array);/////0,1,2,3,4,5,6,7,8
+    array.pop_back();////remove element at the end of the array
+    $display("array:%0p",array);////0,1,2,3,4,5,6,7
+  end
+endmodule
+    
