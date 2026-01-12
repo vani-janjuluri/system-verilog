@@ -1,0 +1,11 @@
+module tb;
+  int array[];
+  initial begin
+    array=new[5];
+    for(int i=0;i<5;i++)
+      begin
+        array[i]=5*i;
+      end
+    $display("array:%0p",array);
+  end
+endmodule
