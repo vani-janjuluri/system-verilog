@@ -1,0 +1,13 @@
+////////declaring values inside teh function itself
+module tb;
+  function bit[4:0] add(input bit[3:0]a=4'b0001,b=4'b1110);
+    return a+b;
+  endfunction
+  bit[4:0]result=0;
+  initial begin
+    result=add();
+    $display("the value of addition is %0b",result);
+  end
+endmodule
+    
+    
