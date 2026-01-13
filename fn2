@@ -1,11 +1,13 @@
+/////specify values outside the function
 module tb;
-  function bit[4:0] add(input bit[3:0]a,b);
+  function bit[4:0] add(input [3:0]a,b);
     return a+b;
   endfunction
-  bit[4:0]y=0;
+  bit[4:0]result=0;
+  bit[3:0]a=4'b0001;
+  bit[3:0]b=4'b1110;
   initial begin
-    y=add(4'b0100,4'b0010);
-    $display("the value of y is %0d",y);
+    result=add(a,b);
+    $display("the addition is %0b",result);
   end
 endmodule
-  
