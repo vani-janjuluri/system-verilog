@@ -1,0 +1,13 @@
+class first;
+  bit[3:0]data1;///default value for bit is 0
+  reg [2:0]data2;///default value for reg is x
+endclass
+module tb;
+  first f;
+  initial begin
+    f=new();
+    $display("the value of data1 is %0d and data2 is %0d",f.data1,f.data2);
+  end
+endmodule
+  
+    
