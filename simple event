@@ -1,0 +1,12 @@
+module tb;
+  event a;///declare a event named a 
+  initial begin
+    #10;
+    ->a;///event triggers
+  end
+  initial begin
+    wait(a.triggered);///wait untill event a is triggers
+    $display("recieved event at %0t",$time);
+  end
+endmodule
+////both the initial blocks reuns parallely 
