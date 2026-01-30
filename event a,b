@@ -1,0 +1,15 @@
+module tb;
+  event a,b;///declare event
+  initial begin
+    #10;
+    ->a;//a is triggered
+    #10;
+    ->b;/// b is triggered 
+  end
+  initial begin 
+    wait(a.triggered);///wait until a is triggered
+    $display("a is triggered and at time : %0t",$time);
+    wait(b.triggered);///waits until b is triggered
+    $display("b is triggered and at time : %0t",$time);
+  end
+endmodule
