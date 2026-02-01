@@ -1,0 +1,24 @@
+////dut module
+module and_4(
+  input[3:0]a,
+  input[3:0]b,
+  output[4:0]y);
+  assign y=a&b;
+endmodule
+///interface module
+interface and_if;
+  logic[3:0]a;
+  logic[3:0]b;
+  logic[4:0]y;
+endinterface
+////testbench module 
+module tb;
+  and_if aif();
+  and_4 dut(.a(aif.a),.b(aif.b),.y(aif.y));
+  initial begin
+    aif.a=4'b1111;
+    aif.b=4'b1111;
+    #10;
+    $display("the value of y is %0b",aif.y);
+  end
+endmodule
