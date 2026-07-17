@@ -1,8 +1,8 @@
 class transaction;
-typedef enum bit {write 1'bo, read= 1'b1} oper_type;
+  typedef enum bit {write=1'b0, read= 1'b1} oper_type;
   randc oper_type oper;
   bit rx;
-  rand bit [7:0] dintx;
+  rand bit [7:0]dintx;
   bit newd;
   bit tx;
   bit [7:0] doutrx;
@@ -14,9 +14,9 @@ typedef enum bit {write 1'bo, read= 1'b1} oper_type;
     copy.dintx = this.dintx;
     copy.newd = this.newd;
     copy.tx = this.tx;
-    copy.doutrx this.doutrx;
-    copy.donetx this.donetx;
-    copy.donerx = this.donerx;
+    copy.doutrx=this.doutrx;
+    copy.donetx=this.donetx;
+    copy.donerx=this.donerx;
     copy.oper = this.oper;
   endfunction
 endclass
@@ -52,7 +52,7 @@ class driver;
   bit wr = 0;
   bit [7:0] datarx;
   function new(mailbox #(bit [7:0]) mbxds, mailbox #(transaction)mbx);
-    this.mbx mbx;
+    this.mbx=mbx;
     this.mbxds = mbxds;
   endfunction
   task reset();
@@ -75,7 +75,7 @@ class driver;
           vif.rst <= 1'b0;
           vif.newd <= 1'b1; 
           vif.rx <= 1'b1;
-          vif.dintx tr.dintx;
+          vif.dintx=tr.dintx;
           @(posedge vif.uclktx);
           vif.newd <= 1'b0;
           mbxds.put(tr.dintx);
@@ -131,7 +131,7 @@ class monitor;
       else if ((vif.rx == 1'b0) && (vif.newd == 1'b0))
         begin
           wait(vif.donerx == 1);
-          rrx vif.doutrx;
+          rrx=vif.doutrx;
           $display("[MON]: DATA RCVD RX %0d", rrx);
           @(posedge vif.uclktx);
           mbx.put(rrx);
@@ -170,66 +170,48 @@ class environment;
   event nextgd;
   event nextgs; 
   mailbox #(transaction) mbxgd;
-  mailbox #(bit [7:01) mbxds;
-                 mailbox #(bit [7:0]) mbxds; 
-                 mailbox #(bit [7:0]) mbxms;
-                 virtual uart_if vif;
-                 function new (virtual uart_if vif);
-                   mbxgd = new();
-                   mbxms=new();
-                   mbxds = new();
-                   gen = new(mbxgd);
-                   drv = new(mbxds, mbxgd);
-                   mon=new(mbxms);
-                   sco = new(mbxds, mbxms);
-                   this.vif vif;
-                   drv.vif = this.vif;
-                   mon.vif = this.vif;
-                   gen.sconext = nextgs;
-                   sco.sconext = nextgs;
-                   gen.drvnext = nextgd;
-                   drv.drvnext = nextgd;
-                 endfunction
-                 task pre_test();
-                   drv.reset();
-                 endtask
-                 task test();
-                   fork
-                     gen.run();
-                     drv.run();
-                     mon.run();
-                     sco.run();
-                   join_any endtask
-                 task post_test();
-                   wait(gen.done.triggered);
-                   $finish();
-                 endtask
-                 task run();
-                   pre_test();
-                   test();
-                   post_test();
-                 endtask
-                 endclass
-/////////////////////////////
-                 module tb;
-                   uart_if vif();
-                   uart_top #(1000000, 9600) dut (vif.clk,vif.rst,vif.rx,vif.dintx,vif.newd,vif.tx,vif.doutrx,vif.donetx,vif.donerx);
-                   initial begin
-                     vif.clk <= 0;
-                   end
-                   always #10 vif.clk <= ~vif.clk;
-                   environment env;
-                   initial begin
-                     env = new(vif);
-                     env.gen.count = 5;
-                     env.run();
-                   end
-                   initial begin
-                     $dumpfile("dump.vcd"); $dumpvars;
-                   end
-                   assign vif.uclktx = dut.utx.uclk;
-                   assign vif.uclkrx dut.rtx.uclk;
-                 endmodule
+  mailbox #(bit [7:0]) mbxds;
+  mailbox #(bit [7:0]) mbxms;
+  virtual uart_if vif;
+  function new (virtual uart_if vif);
+    mbxgd = new();
+    mbxms=new();
+    mbxds = new();
+    gen = new(mbxgd);
+    drv = new(mbxds, mbxgd);
+    mon=new(mbxms);
+    sco = new(mbxds, mbxms);
+    this.vif=vif;
+    drv.vif = this.vif;
+    mon.vif = this.vif;
+    gen.sconext = nextgs;
+    sco.sconext = nextgs;
+    gen.drvnext = nextgd;
+    drv.drvnext = nextgd;
+  endfunction
+  task pre_test();
+    drv.reset();
+  endtask
+  task test();
+    fork
+      gen.run();
+      drv.run();
+      mon.run();
+      sco.run();
+      join_any
+  endtask
+  task post_test();
+     wait(gen.done.triggered);
+     $finish();
+     endtask
+  task run();
+     pre_test();
+     test();
+     post_test();
+     endtask
+  endclass
+                      
+                  
 
 
 
